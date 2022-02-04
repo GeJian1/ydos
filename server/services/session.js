@@ -299,6 +299,7 @@ const getOAuthInfo = async () => {
   }
 
   const servers = []
+  console.log(JSON.stringify(resp),'resp-----')
   if (resp && !isEmpty(resp.identityProviders)) {
     resp.identityProviders.forEach(item => {
       if (item && item.provider) {
@@ -341,6 +342,7 @@ const getOAuthInfo = async () => {
                 `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
             )
             .join('&')}`
+          console.log(url, type, endSessionURL,'-------------')
           servers.push({ title: item.name, url, type, endSessionURL })
         }
       }

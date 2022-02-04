@@ -39,7 +39,7 @@ const renderView = async ctx => {
       getKSConfig(),
       getK8sRuntime(ctx),
     ])
-
+    // console.log(user, ksConfig, runtime,'走这里了')
     await renderIndex(ctx, { ksConfig, user, runtime })
   } catch (err) {
     renderViewErr(ctx, err)
@@ -48,13 +48,11 @@ const renderView = async ctx => {
 
 const renderLogin = async ctx => {
   const referer = ctx.querystring.split('referer=')[1]
-  const manifest = getManifest('main')
   if (isValidReferer(referer)) {
     ctx.cookies.set('referer', referer)
   }
 
   const oauthServers = await getOAuthInfo(ctx)
-
   await renderIndex(ctx, {
     oauthServers: oauthServers || [],
   })

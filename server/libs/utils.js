@@ -134,7 +134,7 @@ const safeParseJSON = (json, defaultValue) => {
   let result
   try {
     result = JSON.parse(json)
-    console.log(result)
+    // console.log(result)
   } catch (e) {}
 
   if (!result && defaultValue !== undefined) {
@@ -143,16 +143,45 @@ const safeParseJSON = (json, defaultValue) => {
   return result
 }
 
+function getJsCssArray (obj,typeKey){
+  const cssArray = [],jsArray = [];
+  if(obj[typeKey]){
+    for(let key in obj[typeKey]){
+      if(key === 'js'){
+        jsArray.push(obj[typeKey][key])
+      }
+      if(key === 'css'){
+        cssArray.push(obj[typeKey][key])
+      }
+    }
+  }
+  return {cssArray,jsArray}
+}
+
+/**
+ * 把webpack.assets.json数据转换成适配server的模板数据源
+ */
+const transformJsonToData = (jsonData,entry) =>{
+  const commonArray = getJsCssArray(jsonData,'chunk-common');
+  const vendorsArray = getJsCssArray(jsonData,'chunk-vendors');
+  const mainArray = getJsCssArray(jsonData,entry);
+
+  const totalJsArray = [...vendorsArray.jsArray,...commonArray.jsArray,...mainArray.jsArray]
+  const totalCssArray = [...vendorsArray.cssArray,...commonArray.cssArray,...mainArray.cssArray]
+  return {
+    css:totalCssArray,
+    js:totalJsArray
+  }
+}
 const getManifest = entry => {
   let manifestCache = cache.get(`${MANIFEST_CACHE_KEY_PREFIX}${entry}`)
 
   if (!manifestCache) {
-    let data = {}
     try {
-      const dataStream = fs.readFileSync(root('dist/manifest.json'))
-      data = safeParseJSON(dataStream.toString(), {})
+      const dataStream = fs.readFileSync(root('dist/webpack.assets.json'))
+      const res = safeParseJSON(dataStream.toString(), {})
+      manifestCache = transformJsonToData(res,entry)
     } catch (error) {}
-    manifestCache = get(data, `entrypoints.${entry}`)
     cache.set(`${MANIFEST_CACHE_KEY_PREFIX}${entry}`, manifestCache)
   }
 

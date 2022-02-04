@@ -23,7 +23,6 @@ Koa.prototype.apply = function(module, ...rest) {
   module(this, ...rest)
   return this
 }
-
 global.MODE_DEV = process.env.NODE_ENV === 'development'
 global.APP_ROOT = path.resolve(__dirname, '../')
 

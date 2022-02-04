@@ -28,7 +28,6 @@ module.exports = (context, options) => (ctx, next) => {
 
   const regex = pathToRegexp(context)
   const proxy = HttpProxy.createProxyServer()
-
   if (!regex.test(ctx.path)) return next()
 
   const { events, ...httpProxyOpts } = options

@@ -4,15 +4,11 @@
   "private": true,
   "scripts": {
     "serve": "NODE_ENV=production node server/server.js",
-    "build": "yarn build:client && yarn build:server",
+    "build": "yarn build2 && yarn serve",
     "build2": "vue-cli-service build",
-    "build:client": "webpack -p --config scripts/webpack.prod.js --display errors-only",
-    "build:e2e": "webpack -p --config scripts/webpack.e2e.js --display errors-only",
-    "build:server": "webpack -p --config scripts/webpack.server.js --display errors-only",
-    "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config scripts/webpack.dev.js -w",
-    "dev:server": "cross-env NODE_ENV=development nodemon -w ./common -w ./server -e js,yaml server/server.js",
+    "dev:server": "cross-env NODE_ENV=development nodemon -w ./server -e js,yaml server/server.js",
     "serve2": "vue-cli-service serve",
-    "start": "concurrently -k --raw 'yarn serve2' 'yarn serve'"
+    "start": "concurrently -k --raw 'yarn serve2' 'yarn dev:server'"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",

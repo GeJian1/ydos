@@ -33,12 +33,14 @@ const {
 
 const { send_gateway_request } = require('../libs/request')
 
+
+// 登陆接口
 const handleLogin = async ctx => {
   const params = ctx.request.body
 
+  // 判断是否有来源
   let referer = ctx.cookies.get('referer')
   referer = referer ? decodeURIComponent(referer) : ''
-
   const error = {}
   let user = null
 
@@ -50,6 +52,7 @@ const handleLogin = async ctx => {
     })
   }
 
+  // 检验用户
   if (isEmpty(error)) {
     try {
       params.password = decryptPassword(params.encrypt, 'kubesphere')
@@ -122,17 +125,19 @@ const handleLogin = async ctx => {
     return ctx.redirect('/login/confirm')
   }
 
+  // 如果用户没有初始化密码 去重置密码处
   if (!user.initialized) {
     return ctx.redirect('/password/confirm')
   }
 
+  // 如果当前登陆的用户不是接口请求用户则重新登陆
   if (lastToken) {
     const { username } = jwtDecode(lastToken)
     if (username && username !== user.username) {
       return ctx.redirect('/')
     }
   }
-
+  console.log(referer,'referer')
   ctx.redirect(isValidReferer(referer) ? referer : '/')
 }
 
