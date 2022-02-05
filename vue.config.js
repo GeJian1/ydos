@@ -1,6 +1,8 @@
 const path = require('path')
 const isDev = process.env.NODE_ENV === 'development';
 const AssetsPlugin = require('assets-webpack-plugin')
+const listenPort = 1998; // 开发环境下静态资源端口
+
 
 module.exports = {
   pages: {
@@ -25,9 +27,9 @@ module.exports = {
     },
     disableHostCheck: true,
     host: '0.0.0.0',
-    port: 1998,
+    port: listenPort,
   },
-  publicPath:isDev ? 'http://localhost:1998':'/dist/',
+  publicPath:isDev ? `http://localhost:${listenPort}`:'/dist/',
   chainWebpack:webpackConfig =>{
     webpackConfig
       .plugin('assets')
