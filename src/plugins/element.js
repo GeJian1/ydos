@@ -9,7 +9,10 @@ import {
   ElRadio,
   ElTabPane,
   ElTabs,
-  ElMessage
+  ElMessage,
+  ElMenu,
+  ElMenuItem,
+  ElSubmenu
 } from 'element-plus'
 
 const components = [
@@ -22,7 +25,10 @@ const components = [
   ElTabPane,
   ElCheckbox,
   ElLink,
-  ElMessage
+  ElMessage,
+  ElMenu,
+  ElMenuItem,
+  ElSubmenu
 ]
 
 function registerElement(app) {

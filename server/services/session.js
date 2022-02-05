@@ -199,7 +199,7 @@ const getUserDetail = async token => {
   try {
     user.globalRules = await getUserGlobalRules(username, token)
   } catch (error) {}
-
+  console.log(user)
   return user
 }
 
@@ -216,7 +216,7 @@ const getWorkspaces = async token => {
   if (resp && resp.items) {
     workspaces = resp.items.map(item => item.metadata.name)
   }
-
+  console.log(workspaces)
   return workspaces
 }
 
@@ -242,7 +242,6 @@ const getKSConfig = async token => {
   } catch (error) {
     console.error(error)
   }
-
   return resp
 }
 
@@ -299,7 +298,6 @@ const getOAuthInfo = async () => {
   }
 
   const servers = []
-  console.log(JSON.stringify(resp),'resp-----')
   if (resp && !isEmpty(resp.identityProviders)) {
     resp.identityProviders.forEach(item => {
       if (item && item.provider) {
@@ -342,7 +340,6 @@ const getOAuthInfo = async () => {
                 `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
             )
             .join('&')}`
-          console.log(url, type, endSessionURL,'-------------')
           servers.push({ title: item.name, url, type, endSessionURL })
         }
       }

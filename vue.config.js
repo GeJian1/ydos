@@ -7,12 +7,12 @@ module.exports = {
     main: {
       // page 的入口
       entry: 'src/main.js',
-      chunks: ['chunk-vendors', 'chunk-common', 'index']
+      chunks: ['chunk-vendors', 'chunk-common', 'main']
     },
     terminal: {
       // page 的入口
       entry: 'src/main.js',
-      chunks: ['chunk-vendors', 'chunk-common', 'home']
+      chunks: ['chunk-vendors', 'chunk-common', 'terminal']
     }
   },
   devServer: {

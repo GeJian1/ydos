@@ -39,7 +39,6 @@ const renderView = async ctx => {
       getKSConfig(),
       getK8sRuntime(ctx),
     ])
-    // console.log(user, ksConfig, runtime,'走这里了')
     await renderIndex(ctx, { ksConfig, user, runtime })
   } catch (err) {
     renderViewErr(ctx, err)

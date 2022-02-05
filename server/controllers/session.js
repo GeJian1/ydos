@@ -167,7 +167,6 @@ const handleLogout = async ctx => {
       method: 'GET',
       url: '/oauth/logout',
     })
-
     if (isAppsRoute(refererPath)) {
       ctx.redirect(refererPath)
     } else {

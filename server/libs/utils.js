@@ -162,6 +162,7 @@ function getJsCssArray (obj,typeKey){
  * 把webpack.assets.json数据转换成适配server的模板数据源
  */
 const transformJsonToData = (jsonData,entry) =>{
+  // 这里与vue.config.js里的chunks文件对应
   const commonArray = getJsCssArray(jsonData,'chunk-common');
   const vendorsArray = getJsCssArray(jsonData,'chunk-vendors');
   const mainArray = getJsCssArray(jsonData,entry);

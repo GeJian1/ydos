@@ -19,22 +19,25 @@ export default {
   },
   methods:{
     async handleLogin(){
-      const params = {
-        username:this.username,
-        encrypt: encrypt('kubesphere', this.password),
-      }
-      const result = await request.post('login', params);
-      console.log(result)
-      if(result.status === 200){
-        ElMessage({
-          type:'error',
-          message:result.message
-        })
-      }else{
-        ElMessage({
-          type:'error',
-          message:result.message
-        })
+      try{
+        const params = {
+          username:this.username,
+          encrypt: encrypt('kubesphere', this.password),
+        }
+        const result = await request.post('login', params);
+        if(result.status === 200){
+          ElMessage({
+            type:'error',
+            message:result.message
+          })
+        }else{
+          ElMessage({
+            type:'error',
+            message:result.message
+          })
+        }
+      }catch (err){
+        console.log(err)
       }
     }
   }
